@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student: Answer Poll</title>
+    <!-- font cdn -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/student_view_style.css">
+    <!-- jquery cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- socket.io script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function(){
+            let socket = io.connect(); // socket.io connection
+            let student_id = `<%- random_id %>`;
+            socket.emit('student_join', student_id);
+            socket.on('update_answer', function(data) {
+                get_question(data);
+            });
+            socket.on('show_question', function(data){
+                get_question(data);
+            });
+            function get_question(data){
+                $('#question').html(`<h2>Question:</h2> <span id="question_content">${data.question}</span>`);
+                let question_active = $('#question');
+                if(question_active > 0){
+                    $('#wait_question').show('slow');
+                } else {
+                    $('#wait_question').hide('slow');
+                }
+                let option_value = '';
+                if (data.opt.length > 0) {
+                    for (let i = 0; i < data.opt.length; i++) {
+                        option_value += `<div id="option-${data.opt[i].option}"><input type="radio" id="${data.opt[i].option}" name="options[]" value="${data.opt[i].option}"><label for="${data.opt[i].option}">${data.opt[i].option}</label></div>`;
+                    }
+                }
+                $('#option_list').html(option_value);
+                $('#vote').html('<input id="vote_btn" type="submit" value="Vote">');
+            }
+            $('#option_form').on('submit', function(e){
+                let checked = document.querySelector('input[type=radio]:checked');
+                if(checked){
+                    socket.emit('vote_submitted', { id: student_id, selected_option: checked.value });
+                    $('#poll_id').val(student_id);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p>Read the question carefully and select your answer.</p>
+        <h2 id="wait_question">Waiting for teacher to insert a question...</h2>
+        <h4 id="question"></h4>
+        <form id="option_form" action="/student_results" method="post">
+            <input type="hidden" name="poll_id" id="poll_id">
+            <div id="option_list"></div>
+            <div id="vote"></div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+}
+.container {
+    border: 5px solid black;
+    width: 600px; 
+    margin: 80px auto;
+    padding: 40px 50px 25px;
+    box-shadow: 8px 8px 8px rgba(0,0,0,0.5);
+    background-color: whitesmoke;
+    text-align: center;
+}
+#current_url, #question, #option {
+    background: none;
+    color: black;
+    border: 1px solid teal;
+    padding: 5px 6px;
+    width: 210px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+#current_url:focus, #question:focus, #option:focus {
+    outline: none;
+}
+#copy_url, #reset {
+    margin-left: 20px;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 6px 12px;
+    background-color: green;
+    box-shadow: 3px 3px #000;
+    color: white;
+    cursor: pointer;
+}
+#reset {
+    background-color: gray;
+}
+#copy_url:hover, #reset:hover {
+    transform: scale(1.04);
+    transition: 0.3s ease;
+}
+#question {
+    width: 500px;
+}
+#options {
+    list-style-position: inside;
+}
+#option {
+    width: 400px;
+}
+#add_option, #result {
+    margin-left: 20px;
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 6px 12px;
+    background-color: #2b78e4;
+    box-shadow: 3px 3px #000;
+    color: white;
+    cursor: pointer;
+}
+#result {
+    background-color: green;
+}
+#result:hover {
+    transform: scale(1.07);
+    transition: 0.3s ease;
+}
+#delete-icon {
+    margin: 0 20px;
+    display: none;
+}

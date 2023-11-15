@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher: Create Poll</title>
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- font cdn -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/create_poll_style.css">
+    <!-- jquery cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- socket.io script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- custom socket.io script -->
+    <script src="/js/create_poll_socket_io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="url_container">
+            Current URL:
+        </div>
+
+        <form action="/teacher_results" method="post" id="pollForm">
+            <input type="hidden" name="poll_id" id="poll_id">
+            <h3>Question</h3>
+            <textarea name="question" id="question" cols="30" rows="10" placeholder="Type your question here..."></textarea><br>
+            <ol id="options">
+                <li><input type="text" name="options[]" placeholder="Type an option here..." id="option"><i id="delete-icon" class="fas fa-trash-alt"></i></li>
+            </ol>
+            <a href="" id="add_option">+ Add an Option</a><br><br>
+            <input id="result" type="submit" value="Start collecting responses and share your result">
+        </form>
+    </div>
+</body>
+</html>

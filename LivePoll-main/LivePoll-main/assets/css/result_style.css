@@ -1,0 +1,46 @@
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+}
+.container {
+    border: 5px solid black;
+    width: 600px; 
+    margin: 80px auto;
+    padding: 20px 50px 25px;
+    box-shadow: 8px 8px 8px rgba(0,0,0,0.5);
+    background-color: whitesmoke;
+}
+#vote_percentage {
+    padding: 25px;
+    width: 400px;
+}
+.progress_value {
+    position: relative;
+    top: -50px;
+    left: 10px;
+}
+#question_container {
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+    margin-bottom: 70px;
+    margin-top: 0;
+}
+.options {
+    margin: 0;
+    margin-top: -50px;
+}
+.count {
+    margin-bottom: 0;
+}
+#percentage_container {
+    border-bottom: 1px solid black;
+    margin-bottom: 15px;
+}
+#create_new_poll {
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 6px 12px;
+    background-color: green;
+    box-shadow: 3px 3px #000;
+    color: white;
+    cursor: pointer;
+}

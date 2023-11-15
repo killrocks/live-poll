@@ -1,0 +1,24 @@
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+}
+.container {
+    text-align: center;
+    margin-top: 100px;
+    display: none;
+}
+p{
+    margin-bottom: 30px;
+}
+#start_poll {
+    text-decoration: none;
+    border: 1px solid black;
+    padding: 12px 20px;
+    background-color: #2b78e4;
+    box-shadow: 3px 3px #000;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+img {
+    margin-top: 20px;
+}

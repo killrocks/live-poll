@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Result</title>
+    <!-- font cdn -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/result_style.css">
+    <!-- jquery cdn-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- socket.io script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- custom socket.io script -->
+    <script src="/js/create_poll_socket_io.js"></script>
+    <script>
+        $(document).ready(function() {
+            let socket = io.connect(); // socket.io connection
+            let id = `<%- data.poll_id %>`;
+            socket.emit('poll_result', id);
+            socket.on('results', function(data){
+                result(data);
+            });
+            function result(data){
+                let option_value = '';
+                for (let i = 0; i < data.opt.length; i++) { /* DOCU: This handles the voting calculation by percentage :: Owner: Cesar Francisco */
+                    let percentage = (Math.round((data.opt[i].vote_count / data.vote_count * 100) * 100) / 100);
+                    if(data.opt[i].vote_count == 0){
+                        percentage = 0;
+                    }
+                    option_value += `<p class="options">${data.opt[i].option}</p><progress id="vote_percentage" value="${percentage }" max="100"></progress><p class="progress_value">${data.opt[i].vote_count} | ${percentage}%</p>`;
+                }
+                $('#percentage_container').html(option_value)
+                $('#voters_count').html(data.vote_count);
+            }
+            socket.on('vote_add', function(){
+                socket.emit('poll_result', id);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p class="count">Voters Count: <span id="voters_count"></span></p>
+        <h2 id="question_container"><%= data.question %></h2>
+        <div id="percentage_container"></div>
+    </div>
+</body>
+</html>
