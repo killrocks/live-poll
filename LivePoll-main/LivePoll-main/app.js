@@ -19,18 +19,18 @@ const server = app.listen(8000, function() {
 	console.log("listening on port 8000");
 });
 
-let polls = []; /* DOCU: This function is responsible for adding a user to the database :: Owner: Cesar Francisco */
-function randomUrl(urlExist){ /* DOCU: This creates a random string that will be passed in the url :: Owner: Cesar Francisco */
+let polls = []; // DOCU: This function is responsible for adding a user to the database
+function randomUrl(urlExist){ // DOCU: This creates a random string that will be passed in the url
     let randomUrl = Math.random().toString(36).substring(7);
     if(randomUrl != urlExist){
         return randomUrl;
     }
     randomUrl(urlExist);
 }
-const io = require('socket.io')(server); /* DOCU: Socket.io connection :: Owner: Cesar Francisco */
-io.sockets.on('connection', function(socket) {  /* DOCU: Establishing a connection with user :: Owner: Cesar Francisco */
+const io = require('socket.io')(server); // DOCU: Socket.io connection 
+io.sockets.on('connection', function(socket) {  // DOCU: Establishing a connection with user 
 	console.log("Connected: "+ socket.connected);
-    socket.on('create_poll', function(){ /* DOCU: This handles the creation of live poll :: Owner: Cesar Francisco */
+    socket.on('create_poll', function(){ // DOCU: This handles the creation of live poll
         let id = randomUrl();
         if(polls.length>0){
             for(let i = 0; i < polls.length; i++){
@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket) {  /* DOCU: Establishing a connecti
             socket.emit('poll_created', id);
         }
     });
-    socket.on('student_join', function(id){ /* DOCU: This handles student joining a room in a created live poll :: Owner: Cesar Francisco */
+    socket.on('student_join', function(id){ /* DOCU: This handles student joining a room in a created live poll */
         let user_id = id;
         socket.join(user_id);
         for(let i = 0; i < polls.length; i++){
@@ -57,7 +57,7 @@ io.sockets.on('connection', function(socket) {  /* DOCU: Establishing a connecti
             }
         }
     });
-    socket.on('update_answer', function(data){ /* DOCU: This handles the insertion/deletion of question and option :: Owner: Cesar Francisco */
+    socket.on('update_answer', function(data){ /* DOCU: This handles the insertion/deletion of question and option */
         for(let i = 0; i < polls.length; i++){
             if(polls[i].id == data.id){
                 polls[i].question = data.question;
@@ -66,7 +66,7 @@ io.sockets.on('connection', function(socket) {  /* DOCU: Establishing a connecti
         }
         socket.to(data.id).emit('update_answer', data);
     });
-    socket.on('vote_submitted', function(data){ /* DOCU: This handles student voting in a created live poll :: Owner: Cesar Francisco */
+    socket.on('vote_submitted', function(data){ /* DOCU: This handles student voting in a created live poll  */
         for(let i = 0; i < polls.length; i++){
             if(polls[i].id == data.id){
                 polls[i].vote_count += 1;
@@ -78,7 +78,7 @@ io.sockets.on('connection', function(socket) {  /* DOCU: Establishing a connecti
         }
         socket.to(data.id).emit('vote_add');
     });
-    socket.on('poll_result', function(id){ /* DOCU: This handles the voting results of a student :: Owner: Cesar Francisco */
+    socket.on('poll_result', function(id){ /* DOCU: This handles the voting results of a student */
         id = id;
         socket.join(id);
         for(let i = 0; i < polls.length; i++){
